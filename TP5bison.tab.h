@@ -70,15 +70,16 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 8 "TP5bison.y"
+#line 10 "TP5bison.y"
 
 char cadena[30];
 int entero;
+char caracter;
 
 
 
 /* Line 1676 of yacc.c  */
-#line 82 "TP5bison.tab.h"
+#line 83 "TP5bison.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

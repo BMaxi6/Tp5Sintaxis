@@ -2,12 +2,15 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
+#include <stdlib.h>
+#include "listaIdentificadores.h"
 //#define YYDEBUG 1
 %}
 
 %union {
 char cadena[30];
 int entero;
+char caracter;
 }
 
 //%verbose
@@ -34,10 +37,10 @@ int entero;
 %token <cadena> POR_IGUAL
 %token <cadena> DIVIDIDO_IGUAL
 
-
-
 %type <cadena> identificadorA
 %type <cadena> exp
+
+
 
 %%
 
@@ -107,10 +110,10 @@ listadoDeSentenciasDeDeclaracion:
 ;
 
 sentenciaDeclaracion: TIPO_DATO listaIdentificadores {printf("Se han declarado variables \n");}
-			| TIPO_DATO IDENTIFICADOR '(' listaParametros')'  {printf("Se ha declarado una funcion \n")}
+			| parametro '(' listaParametros')'  {printf("Se ha declarado una funcion \n")}
 ;
 
-sentenciaAsignacion: parametro {printf(" Aca hay un parametro\n")} '=' exp ';'  {printf("Se ha declarado una sentencia de asignacion \n")}
+sentenciaAsignacion: parametro '=' exp ';' 
 			| 		 parametro MAS_IGUAL exp ';' {printf("Se ha declarado una sentencia de asignacion \n")}
 			| 		 parametro MENOS_IGUAL exp ';' {printf("Se ha declarado una sentencia de asignacion \n")}
 			|  		 parametro POR_IGUAL exp ';' {printf("Se ha declarado una sentencia de asignacion \n")}
@@ -133,9 +136,8 @@ listaIdentificadores: 	  identificadorA
 
 ;
 
-identificadorA:		  IDENTIFICADOR
-			| IDENTIFICADOR '=' exp {printf("Se asigna al identificador %s el valor %d \n",$1,$3);}
-			| IDENTIFICADOR '=' CHAR {printf("Se asigna al identificador %s la letra %s \n", $1,$3);}
+identificadorA:		  IDENTIFICADOR { 	agregarId($1);}
+			| IDENTIFICADOR '=' exp {printf("Se asigna al identificador %s el valor %s \n",$1,$3); agregarId($1); recorrerListaId();}
 
 ;
 
@@ -145,7 +147,7 @@ exp         : LITERAL_CADENA
 			| IDENTIFICADOR
 			| NUM
 			| CHAR
-			| exp '+' exp
+			| exp '+' exp		
 			| exp '-' exp
 			| exp '>' exp
 			| exp '<' exp
