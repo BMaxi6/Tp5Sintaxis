@@ -134,7 +134,7 @@ listaIdentificadores: 	  identificadorA
 ;
 
 identificadorA:		  IDENTIFICADOR
-			| IDENTIFICADOR '=' NUM {printf("Se asigna al identificador %s el valor %d \n",$1,$3);}
+			| IDENTIFICADOR '=' exp {printf("Se asigna al identificador %s el valor %d \n",$1,$3);}
 			| IDENTIFICADOR '=' CHAR {printf("Se asigna al identificador %s la letra %s \n", $1,$3);}
 
 ;
