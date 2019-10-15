@@ -19,7 +19,7 @@ break										 { strcpy(yylval.cadena, yytext); return BREAK;}
 default										 { strcpy(yylval.cadena, yytext); return DEFAULT;}
 for|switch|case|if|else					     { strcpy(yylval.cadena, yytext); return PALABRA_RESERVADA;}
 char|int|float|double|void|struct|enum|bool  { strcpy(yylval.cadena, yytext); return TIPO_DATO; }
-[a-zA-Z]                                     { strcpy(yylval.cadena, yytext); return CHAR; }
+(\'[a-zA-Z]\')                               { strcpy(yylval.cadena, yytext); return CHAR; }
 [a-zA-Z_]([a-zA-Z_]|[0-9])*                  { strcpy(yylval.cadena, yytext); return IDENTIFICADOR; }
 (>=)										 { strcpy(yylval.cadena, yytext); return MAYOR_IGUAL;}
 (<=)										 { strcpy(yylval.cadena, yytext); return MENOR_IGUAL;}

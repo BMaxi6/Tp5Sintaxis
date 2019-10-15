@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
-// #define YYDEBUG 1
+//#define YYDEBUG 1
 %}
 
 %union {
@@ -10,7 +10,7 @@ char cadena[30];
 int entero;
 }
 
-// %verbose
+//%verbose
 
 %token <entero> NUM
 %token <cadena> IDENTIFICADOR
@@ -110,7 +110,7 @@ sentenciaDeclaracion: TIPO_DATO listaIdentificadores {printf("Se han declarado v
 			| TIPO_DATO IDENTIFICADOR '(' listaParametros')'  {printf("Se ha declarado una funcion \n")}
 ;
 
-sentenciaAsignacion: parametro '=' exp ';'  {printf("Se ha declarado una sentencia de asignacion \n")}
+sentenciaAsignacion: parametro {printf(" Aca hay un parametro\n")} '=' exp ';'  {printf("Se ha declarado una sentencia de asignacion \n")}
 			| 		 parametro MAS_IGUAL exp ';' {printf("Se ha declarado una sentencia de asignacion \n")}
 			| 		 parametro MENOS_IGUAL exp ';' {printf("Se ha declarado una sentencia de asignacion \n")}
 			|  		 parametro POR_IGUAL exp ';' {printf("Se ha declarado una sentencia de asignacion \n")}
@@ -143,6 +143,8 @@ identificadorA:		  IDENTIFICADOR
 
 exp         : LITERAL_CADENA
 			| IDENTIFICADOR
+			| NUM
+			| CHAR
 			| exp '+' exp
 			| exp '-' exp
 			| exp '>' exp
@@ -153,14 +155,12 @@ exp         : LITERAL_CADENA
 			| exp DESIGUALDAD exp
 			| exp AND exp
 			| exp OR exp
-			| NUM
-			| CHAR
 ;
 
 %%
 
 main ()
 {
-// yydebug = 1;
+ // yydebug = 1;
   yyparse ();
 }
