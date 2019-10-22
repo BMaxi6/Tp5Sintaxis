@@ -109,8 +109,10 @@ listadoDeSentenciasDeDeclaracion:
 			| sentenciaDeclaracion ';' listadoDeSentenciasDeDeclaracion
 ;
 
-sentenciaDeclaracion: TIPO_DATO listaIdentificadores {printf("Se han declarado variables \n");}
-			| parametro '(' listaTipoDeDato')'  {printf("Se ha declarado una funcion \n")}
+sentenciaDeclaracion: TIPO_DATO listaIdentificadores ';' {printf("Se han declarado variables \n");}
+			| TIPO_DATO IDENTIFICADOR '[' exp ']' ';' {printf("Se ha declarado un arreglo \n");}
+			| TIPO_DATO '*' IDENTIFICADOR';' {printf("Se ha declarado un puntero \n");}
+			| parametro '(' listaTipoDeDato')' ';'  {printf("Se ha declarado una funcion \n");}
 ;
 
 sentenciaAsignacion: parametro '=' exp ';' 
@@ -123,7 +125,7 @@ sentenciaAsignacion: parametro '=' exp ';'
 
 parametro:
 			| TIPO_DATO IDENTIFICADOR
-			| IDENTIFICADOR
+			| IDENTIFICADOR 
 
 ;
 
@@ -142,7 +144,8 @@ listaTipoDeDato: TIPO_DATO
 
 ;
 
-exp         : LITERAL_CADENA
+exp         : 
+			| LITERAL_CADENA
 			| IDENTIFICADOR
 			| NUM
 			| CHAR
