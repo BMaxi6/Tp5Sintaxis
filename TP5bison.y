@@ -110,7 +110,7 @@ listadoDeSentenciasDeDeclaracion:
 ;
 
 sentenciaDeclaracion: TIPO_DATO listaIdentificadores {printf("Se han declarado variables \n");}
-			| parametro '(' listaParametros')'  {printf("Se ha declarado una funcion \n")}
+			| parametro '(' listaTipoDeDato')'  {printf("Se ha declarado una funcion \n")}
 ;
 
 sentenciaAsignacion: parametro '=' exp ';' 
@@ -120,10 +120,6 @@ sentenciaAsignacion: parametro '=' exp ';'
 			|		 parametro DIVIDIDO_IGUAL exp ';' {printf("Se ha declarado una sentencia de asignacion \n")}
 ;
 
-listaParametros: parametro
-			| parametro ',' listaParametros
-
-;
 
 parametro:
 			| TIPO_DATO IDENTIFICADOR
@@ -141,7 +137,10 @@ identificadorA:		  IDENTIFICADOR { 	agregarId($1);}
 
 ;
 
+listaTipoDeDato: TIPO_DATO
+			| TIPO_DATO ',' listaTipoDeDato
 
+;
 
 exp         : LITERAL_CADENA
 			| IDENTIFICADOR
