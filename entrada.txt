@@ -1,0 +1,15 @@
+int funcion(float, char);
+
+for ( int array[3] ; ; 4 ; c++){}
+
+int variable = 42;
+
+
+
+
+
+
+
+
+
+

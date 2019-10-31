@@ -70,7 +70,7 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 10 "TP5bison.y"
+#line 12 "TP5bison.y"
 
 char cadena[30];
 int entero;

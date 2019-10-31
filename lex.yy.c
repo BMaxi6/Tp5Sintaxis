@@ -432,10 +432,10 @@ static char *yy_last_accepting_cpos;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "tp5.l"
+#line 1 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 #define INITIAL 0
-#line 2 "tp5.l"
-#include "TP4bison.tab.h"
+#line 2 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
+#include "TP5bison.tab.h"
 #include <string.h>
 #include <stdlib.h>
 #line 442 "lex.yy.c"
@@ -589,7 +589,7 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 7 "tp5.l"
+#line 7 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 
 
 
@@ -678,217 +678,217 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 10 "tp5.l"
+#line 10 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { strcpy(yylval.cadena, yytext); return MAS_IGUAL;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 11 "tp5.l"
+#line 11 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { strcpy(yylval.cadena, yytext); return MENOS_IGUAL;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 12 "tp5.l"
+#line 12 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { strcpy(yylval.cadena, yytext); return POR_IGUAL;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 13 "tp5.l"
+#line 13 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { strcpy(yylval.cadena, yytext); return DIVIDIDO_IGUAL;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 14 "tp5.l"
+#line 14 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { yylval.entero = atoi(yytext); return NUM; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 15 "tp5.l"
+#line 15 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { strcpy(yylval.cadena, yytext); return WHILE;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 16 "tp5.l"
+#line 16 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { strcpy(yylval.cadena, yytext); return DO;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 17 "tp5.l"
+#line 17 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { strcpy(yylval.cadena, yytext); return CASE;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 18 "tp5.l"
+#line 18 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { strcpy(yylval.cadena, yytext); return BREAK;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 19 "tp5.l"
+#line 19 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { strcpy(yylval.cadena, yytext); return DEFAULT;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 20 "tp5.l"
+#line 20 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { strcpy(yylval.cadena, yytext); return PALABRA_RESERVADA;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 21 "tp5.l"
+#line 21 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { strcpy(yylval.cadena, yytext); return TIPO_DATO; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 22 "tp5.l"
+#line 22 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { strcpy(yylval.cadena, yytext); return CHAR; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 23 "tp5.l"
+#line 23 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { strcpy(yylval.cadena, yytext); return IDENTIFICADOR; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 24 "tp5.l"
+#line 24 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { strcpy(yylval.cadena, yytext); return MAYOR_IGUAL;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 25 "tp5.l"
+#line 25 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { strcpy(yylval.cadena, yytext); return MENOR_IGUAL;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 26 "tp5.l"
+#line 26 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { strcpy(yylval.cadena, yytext); return IGUALDAD;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 27 "tp5.l"
+#line 27 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { strcpy(yylval.cadena, yytext); return AND;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 28 "tp5.l"
+#line 28 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { strcpy(yylval.cadena, yytext); return OR;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 29 "tp5.l"
+#line 29 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { strcpy(yylval.cadena, yytext); return DESIGUALDAD;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 30 "tp5.l"
+#line 30 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { strcpy(yylval.cadena, yytext); return LITERAL_CADENA;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 32 "tp5.l"
+#line 32 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { return '='; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 33 "tp5.l"
+#line 33 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { return ','; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 34 "tp5.l"
+#line 34 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { return ';'; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 35 "tp5.l"
+#line 35 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { return '+'; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 36 "tp5.l"
+#line 36 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { return '-'; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 37 "tp5.l"
+#line 37 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { return '*'; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 38 "tp5.l"
+#line 38 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { return '/'; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 39 "tp5.l"
+#line 39 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { return '%'; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 40 "tp5.l"
+#line 40 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { return ')'; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 41 "tp5.l"
+#line 41 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { return '('; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 42 "tp5.l"
+#line 42 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { return '{'; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 43 "tp5.l"
+#line 43 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { return '}'; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 44 "tp5.l"
+#line 44 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { return '['; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 45 "tp5.l"
+#line 45 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { return ']'; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 46 "tp5.l"
+#line 46 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { return '&'; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 47 "tp5.l"
+#line 47 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { return '|'; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 48 "tp5.l"
+#line 48 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { return '<'; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 49 "tp5.l"
+#line 49 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { return '>'; }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 50 "tp5.l"
+#line 50 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { return '!'; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 51 "tp5.l"
+#line 51 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { return ':'; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 53 "tp5.l"
+#line 53 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 { return '\n'; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 55 "tp5.l"
+#line 55 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 ECHO;
 	YY_BREAK
 #line 895 "lex.yy.c"
@@ -1777,5 +1777,5 @@ int main()
 	return 0;
 	}
 #endif
-#line 55 "tp5.l"
+#line 55 "C:\\Users\\Matias\\Desktop\\tp5prueba\\tp5.l"
 

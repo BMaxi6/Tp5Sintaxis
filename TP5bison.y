@@ -4,6 +4,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include "listaIdentificadores.h"
+extern FILE *yyin;
+extern FILE *yyout;
 //#define YYDEBUG 1
 %}
 
@@ -39,8 +41,10 @@ char caracter;
 
 %type <cadena> identificadorA
 %type <cadena> exp
-
-
+%type <cadena> sentenciaDeclaracion
+%type <cadena> listaTipoDeDato
+%type <cadena> parametro
+%type <cadena> listaIdentificadores
 
 %%
 
@@ -57,6 +61,7 @@ line:     '\n'
 		| sentenciaDo '\n'
 		| sentenciaIfElse '\n'
 		| sentenciaAsignacion '\n'
+		| error '\n' { yyerrok; }
 
 ;
 
@@ -65,20 +70,20 @@ line:     '\n'
 definicionFuncion: sentenciaDeclaracion '{' listadoDeSentencias '}' {printf("Se ha definido una funcion \n");}
 
 listadoDeSentencias:
-			| sentenciaSwitch listadoDeSentencias
-			| sentenciaDo listadoDeSentencias
-			| sentenciaFor listadoDeSentencias
-			| sentenciaWhile listadoDeSentencias
-			| sentenciaIfElse listadoDeSentencias
-			| sentenciaAsignacion listadoDeSentencias
-			| listadoDeSentenciasDeDeclaracion listadoDeSentencias
+					| sentenciaSwitch listadoDeSentencias
+					| sentenciaDo listadoDeSentencias
+					| sentenciaFor listadoDeSentencias
+					| sentenciaWhile listadoDeSentencias
+					| sentenciaIfElse listadoDeSentencias
+					| sentenciaAsignacion listadoDeSentencias
+					| listadoDeSentenciasDeDeclaracion listadoDeSentencias
 
 sentenciaDo: DO '{' listadoDeSentencias '}' {printf( "Se ha declarado una sentencia do \n");}
 
 ;
 
-sentenciaFor : PALABRA_RESERVADA '(' sentenciaDeclaracion ';' exp ';' identificadorA '+''+' ')' '{' listadoDeSentencias '}' {printf("Se ha declarado una sentencia for\n")}
-			| PALABRA_RESERVADA '(' sentenciaDeclaracion ';' exp ';' identificadorA '-''-' ')' '{' listadoDeSentencias '}' {printf("Se ha declarado una sentencia for\n")}
+sentenciaFor :	 PALABRA_RESERVADA '(' sentenciaDeclaracion ';' exp ';' identificadorA '+''+' ')' '{' listadoDeSentencias '}' '\n' {printf("Se ha declarado una sentencia for\n"); fputs("Se ha declarado una sentencia for \n", yyout);}
+				| PALABRA_RESERVADA '(' sentenciaDeclaracion ';' exp ';' identificadorA '-''-' ')' '{' listadoDeSentencias '}' {printf("Se ha declarado una sentencia for\n")}
 
 ;
 
@@ -87,7 +92,7 @@ sentenciaIfElse: PALABRA_RESERVADA '(' exp ')' '{' listadoDeSentencias '}' {prin
 ;
 
 sentenciaElse:
-			| PALABRA_RESERVADA '{' listadoDeSentencias '}' {printf ("Se declaron un else \n");}
+				| PALABRA_RESERVADA '{' listadoDeSentencias '}' {printf ("Se declaron un else \n");}
 
 ;
 
@@ -96,60 +101,62 @@ sentenciaWhile: WHILE '(' exp ')' '{' listadoDeSentencias '}' {printf ("Se decla
 ;
 
 sentenciaSwitch:
-			| PALABRA_RESERVADA '(' exp ')' '{' sentenciaCase '}' {printf ("Se declaro un switch \n");}
+				| PALABRA_RESERVADA '(' exp ')' '{' sentenciaCase '}' {printf ("Se declaro un switch \n");}
 
 ;
 
 sentenciaCase:
-			| CASE exp ':' listadoDeSentencias BREAK ';' {printf ("Se declaro un case \n");}
-			|sentenciaCase DEFAULT ':' listadoDeSentencias {printf ("Se declaro el default \n");}
+				| CASE exp ':' listadoDeSentencias BREAK ';' {printf ("Se declaro un case \n");}
+				| sentenciaCase DEFAULT ':' listadoDeSentencias {printf ("Se declaro el default \n");}
 
 listadoDeSentenciasDeDeclaracion:
-			|sentenciaDeclaracion
-			| sentenciaDeclaracion ';' listadoDeSentenciasDeDeclaracion
+									| sentenciaDeclaracion
+									| sentenciaDeclaracion ';' listadoDeSentenciasDeDeclaracion
 ;
 
-sentenciaDeclaracion: TIPO_DATO listaIdentificadores ';' {printf("Se han declarado variables \n");}
-			| TIPO_DATO IDENTIFICADOR '[' exp ']' ';' {printf("Se ha declarado un arreglo \n");}
-			| TIPO_DATO '*' IDENTIFICADOR';' {printf("Se ha declarado un puntero \n");}
-			| parametro '(' listaTipoDeDato')' ';'  {printf("Se ha declarado una funcion \n");}
+sentenciaDeclaracion:	 TIPO_DATO listaIdentificadores ';' {printf("Se han declarado variables \n");}
+						| TIPO_DATO IDENTIFICADOR '[' exp ']' ';' {printf("Se ha declarado un arreglo \n");}
+						| TIPO_DATO '*' IDENTIFICADOR';' {printf("Se ha declarado un puntero \n");}
+						| parametro '(' listaTipoDeDato')' ';'  {printf("Se ha declarado una funcion \n");fputs("Se ha declarado una funcion \n", yyout);}
 ;
 
 sentenciaAsignacion: parametro '=' exp ';' 
-			| 		 parametro MAS_IGUAL exp ';' {printf("Se ha declarado una sentencia de asignacion \n")}
-			| 		 parametro MENOS_IGUAL exp ';' {printf("Se ha declarado una sentencia de asignacion \n")}
-			|  		 parametro POR_IGUAL exp ';' {printf("Se ha declarado una sentencia de asignacion \n")}
-			|		 parametro DIVIDIDO_IGUAL exp ';' {printf("Se ha declarado una sentencia de asignacion \n")}
+					|parametro MAS_IGUAL exp ';' {printf("Se ha declarado una sentencia de asignacion \n")}
+					|parametro MENOS_IGUAL exp ';' {printf("Se ha declarado una sentencia de asignacion \n")}
+					|parametro POR_IGUAL exp ';' {printf("Se ha declarado una sentencia de asignacion \n")}
+					|parametro DIVIDIDO_IGUAL exp ';' {printf("Se ha declarado una sentencia de asignacion \n")}
+					
+
 ;
 
 
 parametro:
-			| TIPO_DATO IDENTIFICADOR
+			| TIPO_DATO IDENTIFICADOR 
 			| IDENTIFICADOR 
 
 ;
 
 listaIdentificadores: 	  identificadorA
-			| identificadorA ',' listaIdentificadores
+						| listaIdentificadores ',' identificadorA   
 
 ;
 
 identificadorA:		  IDENTIFICADOR { 	agregarId($1);}
-			| IDENTIFICADOR '=' exp {printf("Se asigna al identificador %s el valor %s \n",$1,$3); agregarId($1); recorrerListaId();}
+					| IDENTIFICADOR '=' exp {printf("Se asigna al identificador %s el valor %s \n",$1,$3); agregarId($1); recorrerListaId(); fprintf(yyout, "Se asigna al identificador \"%s\" el valor %s \n",$1,$3)}
 
 ;
 
 listaTipoDeDato: TIPO_DATO
-			| TIPO_DATO ',' listaTipoDeDato
+				| TIPO_DATO ',' listaTipoDeDato
 
 ;
 
-exp         : 
+exp: 
 			| LITERAL_CADENA
 			| IDENTIFICADOR
-			| NUM
+			| NUM {itoa($1,$$,10)}
 			| CHAR
-			| exp '+' exp		
+			| exp '+' exp	
 			| exp '-' exp
 			| exp '>' exp
 			| exp '<' exp
@@ -166,5 +173,12 @@ exp         :
 main ()
 {
  // yydebug = 1;
+
+yyin = fopen("entrada.txt","r+");
+yyout = fopen("salida.txt","wt+");
+
   yyparse ();
+
+
+
 }
