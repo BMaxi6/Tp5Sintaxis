@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
+#include <math.h>
 #include "listaIdentificadores.h"
 extern FILE *yyin;
 extern FILE *yyout;
@@ -10,41 +11,43 @@ extern FILE *yyout;
 %}
 
 %union {
-char cadena[30];
-int entero;
-char caracter;
+	struct{
+     char cadena[50];
+     float valor;
+     int tipo;
+	}s;
 }
 
 //%verbose
 
-%token <entero> NUM
-%token <cadena> IDENTIFICADOR
-%token <cadena> TIPO_DATO
-%token <cadena> PALABRA_RESERVADA
-%token <cadena> DO
-%token <cadena> WHILE
-%token <cadena> CHAR
-%token <cadena> LITERAL_CADENA
-%token <cadena> MAYOR_IGUAL
-%token <cadena> MENOR_IGUAL
-%token <cadena> IGUALDAD
-%token <cadena> AND
-%token <cadena> OR
-%token <cadena> DESIGUALDAD
-%token <cadena> CASE
-%token <cadena> BREAK
-%token <cadena> DEFAULT
-%token <cadena> MAS_IGUAL
-%token <cadena> MENOS_IGUAL
-%token <cadena> POR_IGUAL
-%token <cadena> DIVIDIDO_IGUAL
-
-%type <cadena> identificadorA
-%type <cadena> exp
-%type <cadena> sentenciaDeclaracion
-%type <cadena> listaTipoDeDato
-%type <cadena> parametro
-%type <cadena> listaIdentificadores
+%token <s> NUM
+%token <s> IDENTIFICADOR
+%token <s> TIPO_DATO
+%token <s> PALABRA_RESERVADA
+%token <s> DO
+%token <s> WHILE
+%token <s> CHAR
+%token <s> LITERAL_CADENA
+%token <s> MAYOR_IGUAL
+%token <s> MENOR_IGUAL
+%token <s> IGUALDAD
+%token <s> AND
+%token <s> OR
+%token <s> DESIGUALDAD
+%token <s> CASE
+%token <s> BREAK
+%token <s> DEFAULT
+%token <s> MAS_IGUAL
+%token <s> MENOS_IGUAL
+%token <s> POR_IGUAL
+%token <s> DIVIDIDO
+%token <s> DIVIDIDO_IGUAL
+%type <s> identificadorA
+%type <s> exp
+%type <s> sentenciaDeclaracion
+%type <s> listaTipoDeDato
+%type <s> parametro
+%type <s> listaIdentificadores
 
 %%
 
@@ -141,8 +144,8 @@ listaIdentificadores: 	  identificadorA
 
 ;
 
-identificadorA:		  IDENTIFICADOR { 	agregarId($1);}
-					| IDENTIFICADOR '=' exp {printf("Se asigna al identificador %s el valor %s \n",$1,$3); agregarId($1); recorrerListaId(); fprintf(yyout, "Se asigna al identificador \"%s\" el valor %s \n",$1,$3)}
+identificadorA:		  IDENTIFICADOR { 	agregarId($<s.cadena>1);}
+					| IDENTIFICADOR '=' exp {printf("Se asigna al identificador %s el valor %s \n",$<s.cadena>1,$<s.valor>3); agregarId($<s.cadena>1); recorrerListaId(); fprintf(yyout, "Se asigna al identificador \"%s\" el valor %s \n",$<s.cadena>1,$<s.valor>3);}
 
 ;
 
@@ -154,18 +157,19 @@ listaTipoDeDato: TIPO_DATO
 exp: 
 			| LITERAL_CADENA
 			| IDENTIFICADOR
-			| NUM {itoa($1,$$,10)}
 			| CHAR
-			| exp '+' exp	
-			| exp '-' exp
-			| exp '>' exp
-			| exp '<' exp
-			| exp IGUALDAD exp
-			| exp MAYOR_IGUAL exp
-			| exp MENOR_IGUAL exp
-			| exp DESIGUALDAD exp
-			| exp AND exp
-			| exp OR exp
+			| exp '+' exp                   { if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 + $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la suma\n");}}
+			| exp '-' exp                   {if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 - $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la resta\n");}}
+			| exp '>' exp                   {if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 > $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion mayor\n");}}
+			| exp '<' exp                   {if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 < $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion menor\n");}}
+			| exp IGUALDAD exp		        {if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 == $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion igualdad\n");}}
+			| exp MAYOR_IGUAL exp           {if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 >= $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion mayor/igual\n");}}
+			| exp MENOR_IGUAL exp           {if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 <= $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion menor/igual\n");}}
+			| exp DESIGUALDAD exp           {if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 != $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion desigualdad\n");}}
+			| exp AND exp                   {if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 && $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion and\n");}}
+			| exp OR exp                    {if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 || $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion or\n");}}
+			| NUM 
+
 ;
 
 %%
@@ -177,7 +181,7 @@ main ()
 yyin = fopen("entrada.txt","r+");
 yyout = fopen("salida.txt","wt+");
 
-  yyparse ();
+yyparse ();
 
 
 

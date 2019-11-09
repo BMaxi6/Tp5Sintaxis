@@ -59,7 +59,8 @@
      MAS_IGUAL = 275,
      MENOS_IGUAL = 276,
      POR_IGUAL = 277,
-     DIVIDIDO_IGUAL = 278
+     DIVIDIDO = 278,
+     DIVIDIDO_IGUAL = 279
    };
 #endif
 
@@ -70,16 +71,18 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 12 "TP5bison.y"
+#line 13 "TP5bison.y"
 
-char cadena[30];
-int entero;
-char caracter;
+	struct{
+     char cadena[50];
+     float valor;
+     int tipo;
+	}s;
 
 
 
 /* Line 1676 of yacc.c  */
-#line 83 "TP5bison.tab.h"
+#line 86 "TP5bison.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
