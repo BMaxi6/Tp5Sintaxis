@@ -25,8 +25,7 @@ int idEncontrado(nodoIdentificador* lista,char* iden){
 	nodoIdentificador* aux = primeroId;
 	while(aux!=NULL){
 		if(!strcmp(aux->identificador, iden)){
-			printf("Doble declaracion \n");
-            //aux->cantidad ++;
+            aux->cantidad ++;
 			return 1;
 		}else{
 		aux=aux->next;
@@ -133,4 +132,16 @@ int calcularTipo(char* potencialIdentificador, int tipoOriginal){
 
     }
     return tipoOriginal;
+}
+
+
+void recorrerListaDobleDeclaracion (){
+	nodoIdentificador *auxiliar=primeroId;
+	while (auxiliar != NULL){
+		if(auxiliar->cantidad > 1){
+			printf ("Existen multiples declaraciones de la variable: %s\n  ",auxiliar->identificador);
+		}
+		auxiliar = auxiliar->next;
+		
+	}
 }
