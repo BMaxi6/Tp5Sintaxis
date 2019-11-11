@@ -1,5 +1,4 @@
-int d = 2 / "Hola" ;
 int a;
-int b;
-int e = 3 * "caca" ;
-int c = 3 * 2 ;
+string b;
+if(a-b){};
+

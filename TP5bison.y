@@ -71,7 +71,7 @@ line:     '\n'
 
 
 definicionFuncion: sentenciaDeclaracion '{' listadoDeSentencias '}' {printf("Se ha definido una funcion \n");}
-
+;
 listadoDeSentencias:
 					| sentenciaSwitch listadoDeSentencias
 					| sentenciaDo listadoDeSentencias
@@ -80,10 +80,9 @@ listadoDeSentencias:
 					| sentenciaIfElse listadoDeSentencias
 					| sentenciaAsignacion listadoDeSentencias
 					| listadoDeSentenciasDeDeclaracion listadoDeSentencias
-
+;
 sentenciaDo: DO '{' listadoDeSentencias '}' {printf( "Se ha declarado una sentencia do \n");}
 
-;
 
 sentenciaFor :	 PALABRA_RESERVADA '(' sentenciaDeclaracion ';' exp ';' identificadorA '+''+' ')' '{' listadoDeSentencias '}' '\n' {printf("Se ha declarado una sentencia for\n"); fputs("Se ha declarado una sentencia for \n", yyout);}
 				| PALABRA_RESERVADA '(' sentenciaDeclaracion ';' exp ';' identificadorA '-''-' ')' '{' listadoDeSentencias '}' {printf("Se ha declarado una sentencia for\n")}
@@ -111,16 +110,18 @@ sentenciaSwitch:
 sentenciaCase:
 				| CASE exp ':' listadoDeSentencias BREAK ';' {printf ("Se declaro un case \n");}
 				| sentenciaCase DEFAULT ':' listadoDeSentencias {printf ("Se declaro el default \n");}
+;
 
 listadoDeSentenciasDeDeclaracion:
 									| sentenciaDeclaracion
-									| sentenciaDeclaracion ';' listadoDeSentenciasDeDeclaracion
+									| sentenciaDeclaracion ';' listadoDeSentenciasDeDeclaracion 
 ;
 
-sentenciaDeclaracion:	 TIPO_DATO listaIdentificadores ';' {printf("Se han declarado variables \n");}
-						| TIPO_DATO IDENTIFICADOR '[' exp ']' ';' {printf("Se ha declarado un arreglo \n");}
-						| TIPO_DATO '*' IDENTIFICADOR';' {printf("Se ha declarado un puntero \n");}
-						| parametro '(' listaTipoDeDato')' ';'  {printf("Se ha declarado una funcion \n");fputs("Se ha declarado una funcion \n", yyout);}
+sentenciaDeclaracion:	TIPO_DATO IDENTIFICADOR ';'				  {agregarId($<s.cadena>2,$<s.cadena>1);printf($<s.cadena>1); recorrerListaId();$<s.tipo>2 = chequearTipo($<s.cadena>1,"int");}
+						| TIPO_DATO listaIdentificadores ';'      {printf("Se han declarado variables \n");}
+						| TIPO_DATO IDENTIFICADOR '[' exp ']' ';' {agregarId($<s.cadena>2,$<s.cadena>1);printf("Se ha declarado un arreglo \n");}
+						| TIPO_DATO '*' IDENTIFICADOR';'          {agregarId($<s.cadena>3,$<s.cadena>1);printf("Se ha declarado un puntero \n");}
+						| parametro '(' listaTipoDeDato')' ';'    {printf("Se ha declarado una funcion \n");fputs("Se ha declarado una funcion \n", yyout);}
 ;
 
 sentenciaAsignacion: parametro '=' exp ';' 
@@ -144,8 +145,8 @@ listaIdentificadores: 	  identificadorA
 
 ;
 
-identificadorA:		  IDENTIFICADOR { 	agregarId($<s.cadena>1);}
-					| IDENTIFICADOR '=' exp {printf("Se asigna al identificador %s el valor %s \n",$<s.cadena>1,$<s.valor>3); agregarId($<s.cadena>1); recorrerListaId(); fprintf(yyout, "Se asigna al identificador \"%s\" el valor %s \n",$<s.cadena>1,$<s.valor>3);}
+identificadorA:		  IDENTIFICADOR {agregarId($<s.cadena>1,"datoLista");}
+					| IDENTIFICADOR '=' exp {printf("Se asigna al identificador %s el valor %s \n",$<s.cadena>1,$<s.valor>3); agregarId($<s.cadena>1,"DatoLista"); recorrerListaId(); fprintf(yyout, "Se asigna al identificador \"%s\" el valor %s \n",$<s.cadena>1,$<s.valor>3);}
 
 ;
 
@@ -158,19 +159,19 @@ exp:
 			| LITERAL_CADENA
 			| IDENTIFICADOR
 			| CHAR
-			| exp '+' exp                   {if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 + $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la suma\n");}}
-			| exp '-' exp                   {if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 - $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la resta\n");}}
-			| exp '>' exp                   {if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 > $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion mayor\n");}}
-			| exp '<' exp                   {if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 < $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion menor\n");}}
-			| exp IGUALDAD exp		        {if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 == $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion igualdad\n");}}
-			| exp MAYOR_IGUAL exp           {if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 >= $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion mayor/igual\n");}}
-			| exp MENOR_IGUAL exp           {if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 <= $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion menor/igual\n");}}
-			| exp DESIGUALDAD exp           {if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 != $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion desigualdad\n");}}
-			| exp AND exp                   {if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 && $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion and\n");}}
-			| exp OR exp                    {if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 || $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion or\n");}}
+			| exp '+' exp                   {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 + $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la suma\n");}}
+			| exp '-' exp                   {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 - $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la resta\n");}}
+			| exp '>' exp                   {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 > $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion mayor\n");}}
+			| exp '<' exp                   {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 < $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion menor\n");}}
+			| exp IGUALDAD exp		        {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 == $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion igualdad\n");}}
+			| exp MAYOR_IGUAL exp           {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 >= $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion mayor/igual\n");}}
+			| exp MENOR_IGUAL exp           {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 <= $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion menor/igual\n");}}
+			| exp DESIGUALDAD exp           {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 != $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion desigualdad\n");}}
+			| exp AND exp                   {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 && $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion and\n");}}
+			| exp OR exp                    {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 || $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion or\n");}}
 			| NUM 
-			| exp '*' exp                   {if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 * $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la multipliacion\n");}}
-			| exp '/' exp                   {if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 / $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la division\n");}}
+			| exp '*' exp                   {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 * $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la multipliacion\n");}}
+			| exp '/' exp                   {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 / $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la division\n");}}
 ;
 
 %%
