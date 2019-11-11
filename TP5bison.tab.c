@@ -442,7 +442,7 @@ static const yytype_uint16 yyprhs[] =
      155,   159,   166,   171,   177,   182,   187,   192,   197,   202,
      203,   206,   208,   210,   214,   216,   220,   222,   226,   227,
      229,   231,   233,   237,   241,   245,   249,   253,   257,   261,
-     265,   269,   273,   275,   279
+     265,   269,   271,   275,   279
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
@@ -471,12 +471,12 @@ static const yytype_int8 yyrhs[] =
       29,    -1,    -1,     5,     4,    -1,     4,    -1,    60,    -1,
       59,    38,    60,    -1,     4,    -1,     4,    37,    62,    -1,
        5,    -1,     5,    38,    61,    -1,    -1,    10,    -1,     4,
-      -1,     9,    -1,    62,    30,    62,    -1,    62,    32,    62,
-      -1,    62,    39,    62,    -1,    62,    40,    62,    -1,    62,
-      13,    62,    -1,    62,    11,    62,    -1,    62,    12,    62,
-      -1,    62,    16,    62,    -1,    62,    14,    62,    -1,    62,
-      15,    62,    -1,     3,    -1,    62,    36,    62,    -1,    62,
-      41,    62,    -1
+      -1,     9,    -1,    62,    32,    62,    -1,    62,    39,    62,
+      -1,    62,    40,    62,    -1,    62,    13,    62,    -1,    62,
+      11,    62,    -1,    62,    12,    62,    -1,    62,    16,    62,
+      -1,    62,    14,    62,    -1,    62,    15,    62,    -1,     3,
+      -1,    62,    36,    62,    -1,    62,    41,    62,    -1,    62,
+      30,    62,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
@@ -486,10 +486,10 @@ static const yytype_uint8 yyrline[] =
       64,    65,    66,    67,    73,    75,    76,    77,    78,    79,
       80,    81,    82,    84,    87,    88,    93,    93,    96,    97,
      101,   105,   106,   110,   111,   112,   115,   116,   117,   120,
-     121,   122,   123,   124,   127,   128,   129,   130,   131,   137,
-     138,   139,   143,   144,   148,   149,   153,   154,   158,   159,
-     160,   161,   162,   163,   164,   165,   166,   167,   168,   169,
-     170,   171,   172,   173,   174
+     121,   122,   123,   124,   128,   129,   130,   131,   132,   138,
+     139,   140,   144,   145,   149,   150,   154,   155,   159,   160,
+     161,   162,   164,   165,   166,   167,   168,   169,   170,   171,
+     172,   173,   174,   175,   176
 };
 #endif
 
@@ -549,7 +549,7 @@ static const yytype_uint8 yyr2[] =
        3,     6,     4,     5,     4,     4,     4,     4,     4,     0,
        2,     1,     1,     3,     1,     3,     1,     3,     0,     1,
        1,     1,     3,     3,     3,     3,     3,     3,     3,     3,
-       3,     3,     1,     3,     3
+       3,     1,     3,     3,     3
 };
 
 /* YYDEFACT[STATE-NAME] -- Default rule to reduce with in state
@@ -562,14 +562,14 @@ static const yytype_uint8 yydefact[] =
        0,    13,    50,     0,     0,    52,    58,    31,    58,     6,
       10,     9,    11,     8,     7,     5,    31,    36,    12,    58,
       58,    58,    58,     0,    58,    39,    58,    58,     0,    40,
-       0,    72,    60,    61,    59,     0,     0,     0,     0,    31,
+       0,    71,    60,    61,    59,     0,     0,     0,     0,    31,
       31,    31,    31,    31,    31,    37,    31,    60,     0,     0,
       38,     0,     0,     0,     0,    56,     0,     0,     0,    55,
       42,    54,    53,    58,    58,    58,    58,    58,    58,    58,
       58,     0,    58,    58,    58,    58,    58,    23,    17,    18,
       20,    19,    16,    22,    21,     0,    14,    45,    46,    47,
-      48,     0,     0,    44,     0,     0,    67,    68,    66,    70,
-      71,    69,    62,    31,    63,    73,    64,    65,    74,    31,
+      48,     0,     0,    44,     0,     0,    66,    67,    65,    69,
+      70,    68,    74,    31,    62,    72,    63,    64,    73,    31,
       57,    43,    41,     0,    58,     0,     0,     0,     0,     0,
       26,     0,    32,    30,     0,     0,    31,    28,    31,     0,
        0,     0,     0,    27,    35,     0,     0,     0,    31,    31,
@@ -1633,14 +1633,14 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 120 "TP5bison.y"
-    {agregarId((yyvsp[(2) - (3)].s.cadena),(yyvsp[(1) - (3)].s.cadena));printf((yyvsp[(1) - (3)].s.cadena)); recorrerListaId();(yyvsp[(2) - (3)].s.tipo) = chequearTipo((yyvsp[(1) - (3)].s.cadena),"int");;}
+    {agregarId((yyvsp[(2) - (3)].s.cadena),(yyvsp[(1) - (3)].s.cadena));printf( "Se declaro %s " , (yyvsp[(1) - (3)].s.cadena)); recorrerListaId();(yyvsp[(2) - (3)].s.tipo) = chequearTipo((yyvsp[(1) - (3)].s.cadena),"int");;}
     break;
 
   case 40:
 
 /* Line 1455 of yacc.c  */
 #line 121 "TP5bison.y"
-    {printf("Se han declarado variables \n");;}
+    {printf("Se han declarado variables \n"); agregarId((yyvsp[(2) - (3)].s.cadena),(yyvsp[(1) - (3)].s.cadena)); recorrerListaId(); ;}
     break;
 
   case 41:
@@ -1667,127 +1667,127 @@ yyreduce:
   case 45:
 
 /* Line 1455 of yacc.c  */
-#line 128 "TP5bison.y"
+#line 129 "TP5bison.y"
     {printf("Se ha declarado una sentencia de asignacion \n");}
     break;
 
   case 46:
 
 /* Line 1455 of yacc.c  */
-#line 129 "TP5bison.y"
+#line 130 "TP5bison.y"
     {printf("Se ha declarado una sentencia de asignacion \n");}
     break;
 
   case 47:
 
 /* Line 1455 of yacc.c  */
-#line 130 "TP5bison.y"
+#line 131 "TP5bison.y"
     {printf("Se ha declarado una sentencia de asignacion \n");}
     break;
 
   case 48:
 
 /* Line 1455 of yacc.c  */
-#line 131 "TP5bison.y"
+#line 132 "TP5bison.y"
     {printf("Se ha declarado una sentencia de asignacion \n");}
     break;
 
   case 54:
 
 /* Line 1455 of yacc.c  */
-#line 148 "TP5bison.y"
-    {agregarId((yyvsp[(1) - (1)].s.cadena),"datoLista");;}
+#line 149 "TP5bison.y"
+    {;}
     break;
 
   case 55:
 
 /* Line 1455 of yacc.c  */
-#line 149 "TP5bison.y"
-    {printf("Se asigna al identificador %s el valor %s \n",(yyvsp[(1) - (3)].s.cadena),(yyvsp[(3) - (3)].s.valor)); agregarId((yyvsp[(1) - (3)].s.cadena),"DatoLista"); recorrerListaId(); fprintf(yyout, "Se asigna al identificador \"%s\" el valor %s \n",(yyvsp[(1) - (3)].s.cadena),(yyvsp[(3) - (3)].s.valor));;}
+#line 150 "TP5bison.y"
+    {printf("Se asigna al identificador %s el valor %f \n",(yyvsp[(1) - (3)].s.cadena),(yyvsp[(3) - (3)].s.valor));;}
     break;
 
   case 62:
 
 /* Line 1455 of yacc.c  */
-#line 162 "TP5bison.y"
-    {(yyvsp[(1) - (3)].s.tipo) = calcularTipo((yyvsp[(1) - (3)].s.cadena),(yyvsp[(1) - (3)].s.tipo));(yyvsp[(3) - (3)].s.tipo) = calcularTipo((yyvsp[(3) - (3)].s.cadena),(yyvsp[(3) - (3)].s.tipo));if ((yyvsp[(1) - (3)].s.tipo)==(yyvsp[(3) - (3)].s.tipo)){(yyval.s.valor) = (yyvsp[(1) - (3)].s.valor) + (yyvsp[(3) - (3)].s.valor); (yyval.s.tipo) = (yyvsp[(1) - (3)].s.tipo);}else{printf("No se corresponden los tipos de datos en la suma\n");};}
+#line 164 "TP5bison.y"
+    {(yyvsp[(1) - (3)].s.tipo) = calcularTipo((yyvsp[(1) - (3)].s.cadena),(yyvsp[(1) - (3)].s.tipo));(yyvsp[(3) - (3)].s.tipo) = calcularTipo((yyvsp[(3) - (3)].s.cadena),(yyvsp[(3) - (3)].s.tipo));if ((yyvsp[(1) - (3)].s.tipo)==(yyvsp[(3) - (3)].s.tipo)){(yyval.s.valor) = (yyvsp[(1) - (3)].s.valor) - (yyvsp[(3) - (3)].s.valor); (yyval.s.tipo) = (yyvsp[(1) - (3)].s.tipo);}else{printf("No se corresponden los tipos de datos en la resta\n"); agregarControlTipos((yyvsp[(1) - (3)].s.cadena), (yyvsp[(3) - (3)].s.cadena), "resta"); recorrerListaControlTipos();};}
     break;
 
   case 63:
 
 /* Line 1455 of yacc.c  */
-#line 163 "TP5bison.y"
-    {(yyvsp[(1) - (3)].s.tipo) = calcularTipo((yyvsp[(1) - (3)].s.cadena),(yyvsp[(1) - (3)].s.tipo));(yyvsp[(3) - (3)].s.tipo) = calcularTipo((yyvsp[(3) - (3)].s.cadena),(yyvsp[(3) - (3)].s.tipo));if ((yyvsp[(1) - (3)].s.tipo)==(yyvsp[(3) - (3)].s.tipo)){(yyval.s.valor) = (yyvsp[(1) - (3)].s.valor) - (yyvsp[(3) - (3)].s.valor); (yyval.s.tipo) = (yyvsp[(1) - (3)].s.tipo);}else{printf("No se corresponden los tipos de datos en la resta\n");};}
+#line 165 "TP5bison.y"
+    {(yyvsp[(1) - (3)].s.tipo) = calcularTipo((yyvsp[(1) - (3)].s.cadena),(yyvsp[(1) - (3)].s.tipo));(yyvsp[(3) - (3)].s.tipo) = calcularTipo((yyvsp[(3) - (3)].s.cadena),(yyvsp[(3) - (3)].s.tipo));if ((yyvsp[(1) - (3)].s.tipo)==(yyvsp[(3) - (3)].s.tipo)){(yyval.s.valor) = (yyvsp[(1) - (3)].s.valor) > (yyvsp[(3) - (3)].s.valor); (yyval.s.tipo) = (yyvsp[(1) - (3)].s.tipo);}else{printf("No se corresponden los tipos de datos en la operacion mayor\n"); agregarControlTipos((yyvsp[(1) - (3)].s.cadena), (yyvsp[(3) - (3)].s.cadena), "mayor"); recorrerListaControlTipos();};}
     break;
 
   case 64:
 
 /* Line 1455 of yacc.c  */
-#line 164 "TP5bison.y"
-    {(yyvsp[(1) - (3)].s.tipo) = calcularTipo((yyvsp[(1) - (3)].s.cadena),(yyvsp[(1) - (3)].s.tipo));(yyvsp[(3) - (3)].s.tipo) = calcularTipo((yyvsp[(3) - (3)].s.cadena),(yyvsp[(3) - (3)].s.tipo));if ((yyvsp[(1) - (3)].s.tipo)==(yyvsp[(3) - (3)].s.tipo)){(yyval.s.valor) = (yyvsp[(1) - (3)].s.valor) > (yyvsp[(3) - (3)].s.valor); (yyval.s.tipo) = (yyvsp[(1) - (3)].s.tipo);}else{printf("No se corresponden los tipos de datos en la operacion mayor\n");};}
+#line 166 "TP5bison.y"
+    {(yyvsp[(1) - (3)].s.tipo) = calcularTipo((yyvsp[(1) - (3)].s.cadena),(yyvsp[(1) - (3)].s.tipo));(yyvsp[(3) - (3)].s.tipo) = calcularTipo((yyvsp[(3) - (3)].s.cadena),(yyvsp[(3) - (3)].s.tipo));if ((yyvsp[(1) - (3)].s.tipo)==(yyvsp[(3) - (3)].s.tipo)){(yyval.s.valor) = (yyvsp[(1) - (3)].s.valor) < (yyvsp[(3) - (3)].s.valor); (yyval.s.tipo) = (yyvsp[(1) - (3)].s.tipo);}else{printf("No se corresponden los tipos de datos en la operacion menor\n"); agregarControlTipos((yyvsp[(1) - (3)].s.cadena), (yyvsp[(3) - (3)].s.cadena),"menor"); recorrerListaControlTipos();};}
     break;
 
   case 65:
 
 /* Line 1455 of yacc.c  */
-#line 165 "TP5bison.y"
-    {(yyvsp[(1) - (3)].s.tipo) = calcularTipo((yyvsp[(1) - (3)].s.cadena),(yyvsp[(1) - (3)].s.tipo));(yyvsp[(3) - (3)].s.tipo) = calcularTipo((yyvsp[(3) - (3)].s.cadena),(yyvsp[(3) - (3)].s.tipo));if ((yyvsp[(1) - (3)].s.tipo)==(yyvsp[(3) - (3)].s.tipo)){(yyval.s.valor) = (yyvsp[(1) - (3)].s.valor) < (yyvsp[(3) - (3)].s.valor); (yyval.s.tipo) = (yyvsp[(1) - (3)].s.tipo);}else{printf("No se corresponden los tipos de datos en la operacion menor\n");};}
+#line 167 "TP5bison.y"
+    {(yyvsp[(1) - (3)].s.tipo) = calcularTipo((yyvsp[(1) - (3)].s.cadena),(yyvsp[(1) - (3)].s.tipo));(yyvsp[(3) - (3)].s.tipo) = calcularTipo((yyvsp[(3) - (3)].s.cadena),(yyvsp[(3) - (3)].s.tipo));if ((yyvsp[(1) - (3)].s.tipo)==(yyvsp[(3) - (3)].s.tipo)){(yyval.s.valor) = (yyvsp[(1) - (3)].s.valor) == (yyvsp[(3) - (3)].s.valor); (yyval.s.tipo) = (yyvsp[(1) - (3)].s.tipo);}else{printf("No se corresponden los tipos de datos en la operacion igualdad\n"); agregarControlTipos((yyvsp[(1) - (3)].s.cadena), (yyvsp[(3) - (3)].s.cadena), "igualdad"); recorrerListaControlTipos();};}
     break;
 
   case 66:
 
 /* Line 1455 of yacc.c  */
-#line 166 "TP5bison.y"
-    {(yyvsp[(1) - (3)].s.tipo) = calcularTipo((yyvsp[(1) - (3)].s.cadena),(yyvsp[(1) - (3)].s.tipo));(yyvsp[(3) - (3)].s.tipo) = calcularTipo((yyvsp[(3) - (3)].s.cadena),(yyvsp[(3) - (3)].s.tipo));if ((yyvsp[(1) - (3)].s.tipo)==(yyvsp[(3) - (3)].s.tipo)){(yyval.s.valor) = (yyvsp[(1) - (3)].s.valor) == (yyvsp[(3) - (3)].s.valor); (yyval.s.tipo) = (yyvsp[(1) - (3)].s.tipo);}else{printf("No se corresponden los tipos de datos en la operacion igualdad\n");};}
+#line 168 "TP5bison.y"
+    {(yyvsp[(1) - (3)].s.tipo) = calcularTipo((yyvsp[(1) - (3)].s.cadena),(yyvsp[(1) - (3)].s.tipo));(yyvsp[(3) - (3)].s.tipo) = calcularTipo((yyvsp[(3) - (3)].s.cadena),(yyvsp[(3) - (3)].s.tipo));if ((yyvsp[(1) - (3)].s.tipo)==(yyvsp[(3) - (3)].s.tipo)){(yyval.s.valor) = (yyvsp[(1) - (3)].s.valor) >= (yyvsp[(3) - (3)].s.valor); (yyval.s.tipo) = (yyvsp[(1) - (3)].s.tipo);}else{printf("No se corresponden los tipos de datos en la operacion mayor/igual\n"); agregarControlTipos((yyvsp[(1) - (3)].s.cadena), (yyvsp[(3) - (3)].s.cadena), "mayor igual"); recorrerListaControlTipos();};}
     break;
 
   case 67:
 
 /* Line 1455 of yacc.c  */
-#line 167 "TP5bison.y"
-    {(yyvsp[(1) - (3)].s.tipo) = calcularTipo((yyvsp[(1) - (3)].s.cadena),(yyvsp[(1) - (3)].s.tipo));(yyvsp[(3) - (3)].s.tipo) = calcularTipo((yyvsp[(3) - (3)].s.cadena),(yyvsp[(3) - (3)].s.tipo));if ((yyvsp[(1) - (3)].s.tipo)==(yyvsp[(3) - (3)].s.tipo)){(yyval.s.valor) = (yyvsp[(1) - (3)].s.valor) >= (yyvsp[(3) - (3)].s.valor); (yyval.s.tipo) = (yyvsp[(1) - (3)].s.tipo);}else{printf("No se corresponden los tipos de datos en la operacion mayor/igual\n");};}
+#line 169 "TP5bison.y"
+    {(yyvsp[(1) - (3)].s.tipo) = calcularTipo((yyvsp[(1) - (3)].s.cadena),(yyvsp[(1) - (3)].s.tipo));(yyvsp[(3) - (3)].s.tipo) = calcularTipo((yyvsp[(3) - (3)].s.cadena),(yyvsp[(3) - (3)].s.tipo));if ((yyvsp[(1) - (3)].s.tipo)==(yyvsp[(3) - (3)].s.tipo)){(yyval.s.valor) = (yyvsp[(1) - (3)].s.valor) <= (yyvsp[(3) - (3)].s.valor); (yyval.s.tipo) = (yyvsp[(1) - (3)].s.tipo);}else{printf("No se corresponden los tipos de datos en la operacion menor/igual\n"); agregarControlTipos((yyvsp[(1) - (3)].s.cadena), (yyvsp[(3) - (3)].s.cadena), "menor igual"); recorrerListaControlTipos();};}
     break;
 
   case 68:
 
 /* Line 1455 of yacc.c  */
-#line 168 "TP5bison.y"
-    {(yyvsp[(1) - (3)].s.tipo) = calcularTipo((yyvsp[(1) - (3)].s.cadena),(yyvsp[(1) - (3)].s.tipo));(yyvsp[(3) - (3)].s.tipo) = calcularTipo((yyvsp[(3) - (3)].s.cadena),(yyvsp[(3) - (3)].s.tipo));if ((yyvsp[(1) - (3)].s.tipo)==(yyvsp[(3) - (3)].s.tipo)){(yyval.s.valor) = (yyvsp[(1) - (3)].s.valor) <= (yyvsp[(3) - (3)].s.valor); (yyval.s.tipo) = (yyvsp[(1) - (3)].s.tipo);}else{printf("No se corresponden los tipos de datos en la operacion menor/igual\n");};}
+#line 170 "TP5bison.y"
+    {(yyvsp[(1) - (3)].s.tipo) = calcularTipo((yyvsp[(1) - (3)].s.cadena),(yyvsp[(1) - (3)].s.tipo));(yyvsp[(3) - (3)].s.tipo) = calcularTipo((yyvsp[(3) - (3)].s.cadena),(yyvsp[(3) - (3)].s.tipo));if ((yyvsp[(1) - (3)].s.tipo)==(yyvsp[(3) - (3)].s.tipo)){(yyval.s.valor) = (yyvsp[(1) - (3)].s.valor) != (yyvsp[(3) - (3)].s.valor); (yyval.s.tipo) = (yyvsp[(1) - (3)].s.tipo);}else{printf("No se corresponden los tipos de datos en la operacion desigualdad\n"); agregarControlTipos((yyvsp[(1) - (3)].s.cadena), (yyvsp[(3) - (3)].s.cadena),"desigualdad"); recorrerListaControlTipos();};}
     break;
 
   case 69:
 
 /* Line 1455 of yacc.c  */
-#line 169 "TP5bison.y"
-    {(yyvsp[(1) - (3)].s.tipo) = calcularTipo((yyvsp[(1) - (3)].s.cadena),(yyvsp[(1) - (3)].s.tipo));(yyvsp[(3) - (3)].s.tipo) = calcularTipo((yyvsp[(3) - (3)].s.cadena),(yyvsp[(3) - (3)].s.tipo));if ((yyvsp[(1) - (3)].s.tipo)==(yyvsp[(3) - (3)].s.tipo)){(yyval.s.valor) = (yyvsp[(1) - (3)].s.valor) != (yyvsp[(3) - (3)].s.valor); (yyval.s.tipo) = (yyvsp[(1) - (3)].s.tipo);}else{printf("No se corresponden los tipos de datos en la operacion desigualdad\n");};}
+#line 171 "TP5bison.y"
+    {(yyvsp[(1) - (3)].s.tipo) = calcularTipo((yyvsp[(1) - (3)].s.cadena),(yyvsp[(1) - (3)].s.tipo));(yyvsp[(3) - (3)].s.tipo) = calcularTipo((yyvsp[(3) - (3)].s.cadena),(yyvsp[(3) - (3)].s.tipo));if ((yyvsp[(1) - (3)].s.tipo)==(yyvsp[(3) - (3)].s.tipo)){(yyval.s.valor) = (yyvsp[(1) - (3)].s.valor) && (yyvsp[(3) - (3)].s.valor); (yyval.s.tipo) = (yyvsp[(1) - (3)].s.tipo);}else{printf("No se corresponden los tipos de datos en la operacion and\n"); agregarControlTipos((yyvsp[(1) - (3)].s.cadena), (yyvsp[(3) - (3)].s.cadena), "and"); recorrerListaControlTipos();};}
     break;
 
   case 70:
 
 /* Line 1455 of yacc.c  */
-#line 170 "TP5bison.y"
-    {(yyvsp[(1) - (3)].s.tipo) = calcularTipo((yyvsp[(1) - (3)].s.cadena),(yyvsp[(1) - (3)].s.tipo));(yyvsp[(3) - (3)].s.tipo) = calcularTipo((yyvsp[(3) - (3)].s.cadena),(yyvsp[(3) - (3)].s.tipo));if ((yyvsp[(1) - (3)].s.tipo)==(yyvsp[(3) - (3)].s.tipo)){(yyval.s.valor) = (yyvsp[(1) - (3)].s.valor) && (yyvsp[(3) - (3)].s.valor); (yyval.s.tipo) = (yyvsp[(1) - (3)].s.tipo);}else{printf("No se corresponden los tipos de datos en la operacion and\n");};}
+#line 172 "TP5bison.y"
+    {(yyvsp[(1) - (3)].s.tipo) = calcularTipo((yyvsp[(1) - (3)].s.cadena),(yyvsp[(1) - (3)].s.tipo));(yyvsp[(3) - (3)].s.tipo) = calcularTipo((yyvsp[(3) - (3)].s.cadena),(yyvsp[(3) - (3)].s.tipo));if ((yyvsp[(1) - (3)].s.tipo)==(yyvsp[(3) - (3)].s.tipo)){(yyval.s.valor) = (yyvsp[(1) - (3)].s.valor) || (yyvsp[(3) - (3)].s.valor); (yyval.s.tipo) = (yyvsp[(1) - (3)].s.tipo);}else{printf("No se corresponden los tipos de datos en la operacion or\n"); agregarControlTipos((yyvsp[(1) - (3)].s.cadena), (yyvsp[(3) - (3)].s.cadena), "or"); recorrerListaControlTipos();};}
     break;
 
-  case 71:
+  case 72:
 
 /* Line 1455 of yacc.c  */
-#line 171 "TP5bison.y"
-    {(yyvsp[(1) - (3)].s.tipo) = calcularTipo((yyvsp[(1) - (3)].s.cadena),(yyvsp[(1) - (3)].s.tipo));(yyvsp[(3) - (3)].s.tipo) = calcularTipo((yyvsp[(3) - (3)].s.cadena),(yyvsp[(3) - (3)].s.tipo));if ((yyvsp[(1) - (3)].s.tipo)==(yyvsp[(3) - (3)].s.tipo)){(yyval.s.valor) = (yyvsp[(1) - (3)].s.valor) || (yyvsp[(3) - (3)].s.valor); (yyval.s.tipo) = (yyvsp[(1) - (3)].s.tipo);}else{printf("No se corresponden los tipos de datos en la operacion or\n");};}
+#line 174 "TP5bison.y"
+    {(yyvsp[(1) - (3)].s.tipo) = calcularTipo((yyvsp[(1) - (3)].s.cadena),(yyvsp[(1) - (3)].s.tipo));(yyvsp[(3) - (3)].s.tipo) = calcularTipo((yyvsp[(3) - (3)].s.cadena),(yyvsp[(3) - (3)].s.tipo));if ((yyvsp[(1) - (3)].s.tipo)==(yyvsp[(3) - (3)].s.tipo)){(yyval.s.valor) = (yyvsp[(1) - (3)].s.valor) * (yyvsp[(3) - (3)].s.valor); (yyval.s.tipo) = (yyvsp[(1) - (3)].s.tipo);}else{printf("No se corresponden los tipos de datos en la multipliacion\n"); agregarControlTipos((yyvsp[(1) - (3)].s.cadena), (yyvsp[(3) - (3)].s.cadena), "multiplicacion"); recorrerListaControlTipos();};}
     break;
 
   case 73:
 
 /* Line 1455 of yacc.c  */
-#line 173 "TP5bison.y"
-    {(yyvsp[(1) - (3)].s.tipo) = calcularTipo((yyvsp[(1) - (3)].s.cadena),(yyvsp[(1) - (3)].s.tipo));(yyvsp[(3) - (3)].s.tipo) = calcularTipo((yyvsp[(3) - (3)].s.cadena),(yyvsp[(3) - (3)].s.tipo));if ((yyvsp[(1) - (3)].s.tipo)==(yyvsp[(3) - (3)].s.tipo)){(yyval.s.valor) = (yyvsp[(1) - (3)].s.valor) * (yyvsp[(3) - (3)].s.valor); (yyval.s.tipo) = (yyvsp[(1) - (3)].s.tipo);}else{printf("No se corresponden los tipos de datos en la multipliacion\n");};}
+#line 175 "TP5bison.y"
+    {(yyvsp[(1) - (3)].s.tipo) = calcularTipo((yyvsp[(1) - (3)].s.cadena),(yyvsp[(1) - (3)].s.tipo));(yyvsp[(3) - (3)].s.tipo) = calcularTipo((yyvsp[(3) - (3)].s.cadena),(yyvsp[(3) - (3)].s.tipo));if ((yyvsp[(1) - (3)].s.tipo)==(yyvsp[(3) - (3)].s.tipo)){(yyval.s.valor) = (yyvsp[(1) - (3)].s.valor) / (yyvsp[(3) - (3)].s.valor); (yyval.s.tipo) = (yyvsp[(1) - (3)].s.tipo);}else{printf("No se corresponden los tipos de datos en la division\n"); agregarControlTipos((yyvsp[(1) - (3)].s.cadena), (yyvsp[(3) - (3)].s.cadena), "division"); recorrerListaControlTipos();};}
     break;
 
   case 74:
 
 /* Line 1455 of yacc.c  */
-#line 174 "TP5bison.y"
-    {(yyvsp[(1) - (3)].s.tipo) = calcularTipo((yyvsp[(1) - (3)].s.cadena),(yyvsp[(1) - (3)].s.tipo));(yyvsp[(3) - (3)].s.tipo) = calcularTipo((yyvsp[(3) - (3)].s.cadena),(yyvsp[(3) - (3)].s.tipo));if ((yyvsp[(1) - (3)].s.tipo)==(yyvsp[(3) - (3)].s.tipo)){(yyval.s.valor) = (yyvsp[(1) - (3)].s.valor) / (yyvsp[(3) - (3)].s.valor); (yyval.s.tipo) = (yyvsp[(1) - (3)].s.tipo);}else{printf("No se corresponden los tipos de datos en la division\n");};}
+#line 176 "TP5bison.y"
+    {(yyvsp[(1) - (3)].s.tipo) = calcularTipo((yyvsp[(1) - (3)].s.cadena),(yyvsp[(1) - (3)].s.tipo));(yyvsp[(3) - (3)].s.tipo) = calcularTipo((yyvsp[(3) - (3)].s.cadena),(yyvsp[(3) - (3)].s.tipo));if ((yyvsp[(1) - (3)].s.tipo)==(yyvsp[(3) - (3)].s.tipo)){(yyval.s.valor) = (yyvsp[(1) - (3)].s.valor) + (yyvsp[(3) - (3)].s.valor); (yyval.s.tipo) = (yyvsp[(1) - (3)].s.tipo);}else{printf("No se corresponden los tipos de datos en la suma\n"); agregarControlTipos( (yyvsp[(1) - (3)].s.cadena), (yyvsp[(3) - (3)].s.cadena), "suma"); recorrerListaControlTipos();};}
     break;
 
 
@@ -2005,7 +2005,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 177 "TP5bison.y"
+#line 180 "TP5bison.y"
 
 
 main ()

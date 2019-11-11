@@ -10,7 +10,16 @@ typedef struct node{
     char identificador[];
 }nodoIdentificador;
 
+typedef struct node2{
+	char exp1[20];
+	char exp2[20];
+	char operacion[20];
+    struct node2* next;
+
+}nodoControlTipos;
+
 nodoIdentificador *primeroId=NULL;
+nodoControlTipos *primeroTipos = NULL;
 
 int idEncontrado(nodoIdentificador* lista,char* iden){
 	nodoIdentificador* aux = primeroId;
@@ -72,6 +81,41 @@ void recorrerListaId(){
             printf( "Nombre: %s\n", auxiliar->identificador);
             printf( "Cantidad : %d\n", auxiliar->cantidad);
             printf( "Tipo : %s\n", auxiliar->tipo);
+            auxiliar = auxiliar->next;
+	}
+ }
+
+ void agregarControlTipos(char *exp1, char* exp2, char* operacion){
+    nodoControlTipos *nuevo;
+    printf("hola \n");
+	nuevo = (nodoControlTipos *) malloc (sizeof(nodoControlTipos));
+    printf("hola \n");
+    if (nuevo == NULL) printf( "No hay memoria disponible!\n");
+
+  	strcpy(nuevo -> exp1, exp1);
+  	strcpy(nuevo -> exp2, exp2);
+  	strcpy(nuevo -> operacion, operacion);
+  	//printf("agrego %s ", iden);
+    nuevo -> next = NULL;
+     if (primeroTipos==NULL) {
+            primeroTipos = nuevo;
+            //ultimoPr = nuevo;
+        } else {
+            nodoControlTipos* aux=primeroTipos;
+            while(aux->next!=NULL){
+                aux=aux->next;
+            }
+            aux->next=nuevo;
+        }
+	}
+
+
+  void recorrerListaControlTipos(){
+
+    nodoControlTipos *auxiliar=primeroTipos;
+    printf("\n__________No se corresponden los tipos de la operacion %s de:\n\n" , auxiliar->operacion);
+    while (auxiliar!=NULL) {
+            printf( " %s y %s \n", auxiliar->exp1, auxiliar->exp2);
             auxiliar = auxiliar->next;
 	}
  }
