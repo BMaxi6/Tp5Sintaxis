@@ -47,9 +47,10 @@ extern FILE *yyout;
 %type <s> identificadorA
 %type <s> exp
 %type <s> sentenciaDeclaracion
-%type <s> listaTipoDeDato
+%type <s> listaParametros
 %type <s> parametro
 %type <s> listaIdentificadores
+%type <s> sentenciaReturn
 
 %%
 
@@ -72,7 +73,7 @@ line:     '\n'
 
 
 
-definicionFuncion: sentenciaDeclaracion '{' listadoDeSentencias '}' {printf("Se ha definido una funcion \n");}
+definicionFuncion: parametro '(' listaParametros')' '{' listadoDeSentencias '}' {printf("Se ha definido una funcion \n");}
 ;
 listadoDeSentencias:
 					| sentenciaSwitch listadoDeSentencias
@@ -81,6 +82,7 @@ listadoDeSentencias:
 					| sentenciaWhile listadoDeSentencias
 					| sentenciaIfElse listadoDeSentencias
 					| sentenciaAsignacion listadoDeSentencias
+					| sentenciaReturn listadoDeSentencias
 					| listadoDeSentenciasDeDeclaracion listadoDeSentencias
 ;
 sentenciaDo: DO '{' listadoDeSentencias '}' {printf( "Se ha declarado una sentencia do \n");}
@@ -114,6 +116,10 @@ sentenciaCase:
 				| sentenciaCase DEFAULT ':' listadoDeSentencias {printf ("Se declaro el default \n");}
 ;
 
+sentenciaReturn:
+				|PALABRA_RESERVADA exp ';'
+;
+
 listadoDeSentenciasDeDeclaracion:
 									| sentenciaDeclaracion
 									| sentenciaDeclaracion ';' listadoDeSentenciasDeDeclaracion 
@@ -123,7 +129,7 @@ sentenciaDeclaracion:	TIPO_DATO IDENTIFICADOR ';'				  {agregarId($<s.cadena>2,$
 						| TIPO_DATO listaIdentificadores ';'      {agregarId($<s.cadena>2,$<s.cadena>1); }
 						| TIPO_DATO IDENTIFICADOR '[' exp ']' ';' {agregarId($<s.cadena>2,$<s.cadena>1);printf("Se ha declarado un arreglo \n");}
 						| TIPO_DATO '*' IDENTIFICADOR';'          {agregarId($<s.cadena>3,$<s.cadena>1);}
-						| parametro '(' listaTipoDeDato')' ';'    { agregarFuncion( $<s.cadena>1, $<s.cadena>2, $<s.cadena>4);}
+						| parametro '(' listaParametros')' ';'    { agregarFuncion( $<s.cadena>1, $<s.cadena>2, $<s.cadena>4);}
 						
 ;
 
@@ -150,13 +156,15 @@ listaIdentificadores: 	  identificadorA
 ;
 
 identificadorA:		  IDENTIFICADOR 
-					| IDENTIFICADOR '=' exp {printf("Se le asigna al identificador %s el valor %f \n", $<s.cadena>1 ,$<s.valor>3)}
+					| IDENTIFICADOR '=' exp {/*printf("Se le asigna al identificador %s el valor %f \n", $<s.cadena>1 ,$<s.valor>3)*/}
 					               
 
 ;
 
-listaTipoDeDato: TIPO_DATO
-				| TIPO_DATO ',' listaTipoDeDato
+listaParametros: TIPO_DATO
+				| TIPO_DATO ',' listaParametros
+				|TIPO_DATO IDENTIFICADOR
+				|TIPO_DATO IDENTIFICADOR ',' listaParametros
 
 ;
 

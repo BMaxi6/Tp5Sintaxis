@@ -92,7 +92,6 @@ void recorrerListaId(){
     printf("\n__________Mostrando la lista de identificadores:\n\n");
     while (auxiliar!=NULL) {
             printf( "Nombre: %s\n", auxiliar->identificador);
-            printf( "Cantidad : %d\n", auxiliar->cantidad);
             printf( "Tipo : %s\n\n", auxiliar->tipo);
             auxiliar = auxiliar->next;
 	}
@@ -106,7 +105,6 @@ void recorrerListaId(){
   	strcpy(nuevo -> exp1, exp1);
   	strcpy(nuevo -> exp2, exp2);
   	strcpy(nuevo -> operacion, operacion);
-  	//printf("agrego %s ", iden);
     nuevo -> next = NULL;
      if (primeroTipos==NULL) {
             primeroTipos = nuevo;

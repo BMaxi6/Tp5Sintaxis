@@ -1,4 +1,72 @@
+int b = 2 + "unString";
+
+float pez
+
+int variable = 5;
+
+int c=3;
+
+int m = 6 + "DosString";
+
+int d;
+
+for (int i; ; i<5 ; i --) {}
+
+int 8=9;
+
+float algo = 5 - "string";
+
+for(int k = 5; k < 10; k++) { while(g != 10){} }
+
 int a;
-string b;
-if(a-b){};
+
+if (a==2){ int varibleLocal=2;}else{int varialbeLocal=4;}
+
+int contador;
+
+while ( contador == 2){ for (int i; ; i<5 ; i --) { int banana=2; float manzana=3.25; return banana; } }
+
+float x,y;
+
+char arreglo[50];
+
+char* puntero;
+
+for (int char; return)
+
+float c;
+
+int tomas= 8 / "juan";
+
+char b;
+
+int funcion1(float, char);
+
+char hola= 5 * "cadena";
+
+char funcion2(int);
+
+float funcion3(double);
+
+while(a!=10){ a+=2; return a;}
+
+while(true){ for(h=3; h=1; h--){}}
+
+float suma = "OtroString" + "String"
+
+if(numero == 10){}else{}
+
+float j = 2.3;
+
+int otraFuncion (float valor){ return valor; }
+
+
+
+
+
+
+
+
+
+
 

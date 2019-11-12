@@ -20,7 +20,7 @@ do 											 { strcpy(yylval.s.cadena, yytext); return DO;}
 case										 { strcpy(yylval.s.cadena, yytext); return CASE;}
 break										 { strcpy(yylval.s.cadena, yytext); return BREAK;}
 default										 { strcpy(yylval.s.cadena, yytext); return DEFAULT;}
-for|switch|case|if|else					     { strcpy(yylval.s.cadena, yytext); return PALABRA_RESERVADA;}
+for|switch|case|if|else|return				 { strcpy(yylval.s.cadena, yytext); return PALABRA_RESERVADA;}
 char|int|float|double|void|struct|enum|bool  { strcpy(yylval.s.cadena, yytext); return TIPO_DATO; }
 (\'[a-zA-Z]\')                               { strcpy(yylval.s.cadena, yytext); yylval.s.tipo = 1; return CHAR;}
 [a-zA-Z_]([a-zA-Z_]|[0-9])*                  { strcpy(yylval.s.cadena, yytext); yylval.s.tipo = 2; return IDENTIFICADOR; }
