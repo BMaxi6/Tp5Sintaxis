@@ -2,12 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 typedef struct node{
 
 	int cantidad;
     struct node* next;
     char tipo[30];
-    char identificador[];
+    char identificador[30];
 }nodoIdentificador;
 
 typedef struct node2{
@@ -18,8 +19,22 @@ typedef struct node2{
 
 }nodoControlTipos;
 
+typedef struct node3{
+  char funcion[20];
+  char tipoRetorno[20];
+  char tipoParametro[20];
+struct node3* next;
+}nodoFuncion;
+
+typedef struct node4{
+  char nombreError[200];
+struct node4* next;
+}nodoError;
+
 nodoIdentificador *primeroId=NULL;
 nodoControlTipos *primeroTipos = NULL;
+nodoFuncion *primeroFuncion = NULL;
+nodoError *primeroError = NULL;
 
 int idEncontrado(nodoIdentificador* lista,char* iden){
 	nodoIdentificador* aux = primeroId;
@@ -49,11 +64,10 @@ int buscarTipo (char* iden){
 }
 void agregarId(char *iden, char *tipoDato){
     nodoIdentificador *nuevo;
-	nuevo = (nodoIdentificador *) malloc (4+4+strlen(iden));
+	nuevo = (nodoIdentificador *) malloc (sizeof(nodoIdentificador));
     if (nuevo == NULL) printf( "No hay memoria disponible!\n");
   	strcpy(nuevo -> identificador, iden);
   	strcpy(nuevo -> tipo, tipoDato);
-  	//printf("agrego %s ", iden);
     nuevo -> cantidad = 1;
     nuevo -> next = NULL;
     if(idEncontrado(nuevo,iden)==0){
@@ -79,16 +93,14 @@ void recorrerListaId(){
     while (auxiliar!=NULL) {
             printf( "Nombre: %s\n", auxiliar->identificador);
             printf( "Cantidad : %d\n", auxiliar->cantidad);
-            printf( "Tipo : %s\n", auxiliar->tipo);
+            printf( "Tipo : %s\n\n", auxiliar->tipo);
             auxiliar = auxiliar->next;
 	}
  }
 
  void agregarControlTipos(char *exp1, char* exp2, char* operacion){
     nodoControlTipos *nuevo;
-    printf("hola \n");
 	nuevo = (nodoControlTipos *) malloc (sizeof(nodoControlTipos));
-    printf("hola \n");
     if (nuevo == NULL) printf( "No hay memoria disponible!\n");
 
   	strcpy(nuevo -> exp1, exp1);
@@ -112,12 +124,47 @@ void recorrerListaId(){
   void recorrerListaControlTipos(){
 
     nodoControlTipos *auxiliar=primeroTipos;
-    printf("\n__________No se corresponden los tipos de la operacion %s de:\n\n" , auxiliar->operacion);
+    printf("\n__________No se corresponden los tipos de:\n\n");
     while (auxiliar!=NULL) {
-            printf( " %s y %s \n", auxiliar->exp1, auxiliar->exp2);
+            printf( "La operacion %s de %s y %s \n\n", auxiliar->operacion, auxiliar->exp1, auxiliar->exp2);
             auxiliar = auxiliar->next;
 	}
  }
+
+ void agregarFuncion(char *retorno, char* nombre, char* parametro){
+    nodoFuncion*nuevo;
+	nuevo = (nodoFuncion *) malloc (sizeof(nodoFuncion));
+    if (nuevo == NULL) printf( "No hay memoria disponible!\n");
+
+  	strcpy(nuevo -> tipoRetorno, retorno);
+  	strcpy(nuevo -> funcion, nombre);
+  	strcpy(nuevo -> tipoParametro, parametro);
+    nuevo -> next = NULL;
+
+     if (primeroFuncion==NULL) {
+            primeroFuncion = nuevo;
+            //ultimoPr = nuevo;
+        } else {
+            nodoFuncion* aux=primeroFuncion;
+            while(aux->next!=NULL){
+                aux=aux->next;
+            }
+            aux->next=nuevo;
+        }
+	}
+
+void recorrerListaFuncion(){
+
+    nodoFuncion *auxiliar=primeroFuncion;
+    printf("\n__________Se han declarado las siguientes funciones:\n\n");
+    while (auxiliar!=NULL) {
+            printf( "Nombre: %s\n", auxiliar->funcion);
+            printf( "Retorno : %s\n", auxiliar->tipoRetorno);
+            printf( "Parametro : %s\n\n", auxiliar->tipoParametro);
+            auxiliar = auxiliar->next;
+	}
+ }
+
 
 int chequearTipo(char* unString,char* otroString){
     if (strcmp(unString,otroString)==0){
@@ -139,9 +186,27 @@ void recorrerListaDobleDeclaracion (){
 	nodoIdentificador *auxiliar=primeroId;
 	while (auxiliar != NULL){
 		if(auxiliar->cantidad > 1){
-			printf ("Existen multiples declaraciones de la variable: %s\n  ",auxiliar->identificador);
+			printf ("Existen multiples declaraciones de la variable: %s\n",auxiliar->identificador);
 		}
 		auxiliar = auxiliar->next;
-		
+
 	}
 }
+
+void reporte(){
+    printf("____________________________________Aca empieza el REPORTE \n");
+    recorrerListaId();
+    recorrerListaFuncion();
+    recorrerListaControlTipos();
+    recorrerListaDobleDeclaracion();
+
+}
+
+
+
+yyerror(char *s){
+    extern int yylineno;
+    printf("\n Error sintactico %s. En la linea %i \n",s,yylineno);
+}
+
+

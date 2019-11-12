@@ -20,6 +20,9 @@ extern FILE *yyout;
 
 //%verbose
 
+%error-verbose
+
+
 %token <s> NUM
 %token <s> IDENTIFICADOR
 %token <s> TIPO_DATO
@@ -40,7 +43,6 @@ extern FILE *yyout;
 %token <s> MAS_IGUAL
 %token <s> MENOS_IGUAL
 %token <s> POR_IGUAL
-%token <s> DIVIDIDO
 %token <s> DIVIDIDO_IGUAL
 %type <s> identificadorA
 %type <s> exp
@@ -117,37 +119,39 @@ listadoDeSentenciasDeDeclaracion:
 									| sentenciaDeclaracion ';' listadoDeSentenciasDeDeclaracion 
 ;
 
-sentenciaDeclaracion:	TIPO_DATO IDENTIFICADOR ';'				  {agregarId($<s.cadena>2,$<s.cadena>1);printf( "Se declaro %s " , $<s.cadena>1); recorrerListaId();$<s.tipo>2 = chequearTipo($<s.cadena>1,"int");}
-						| TIPO_DATO listaIdentificadores ';'      {printf("Se han declarado variables \n"); agregarId($<s.cadena>2,$<s.cadena>1); recorrerListaId(); }
+sentenciaDeclaracion:	TIPO_DATO IDENTIFICADOR ';'				  {agregarId($<s.cadena>2,$<s.cadena>1); $<s.tipo>2 = chequearTipo($<s.cadena>1,"int");}
+						| TIPO_DATO listaIdentificadores ';'      {agregarId($<s.cadena>2,$<s.cadena>1); }
 						| TIPO_DATO IDENTIFICADOR '[' exp ']' ';' {agregarId($<s.cadena>2,$<s.cadena>1);printf("Se ha declarado un arreglo \n");}
-						| TIPO_DATO '*' IDENTIFICADOR';'          {agregarId($<s.cadena>3,$<s.cadena>1);printf("Se ha declarado un puntero \n");}
-						| parametro '(' listaTipoDeDato')' ';'    {printf("Se ha declarado una funcion \n");fputs("Se ha declarado una funcion \n", yyout);}
+						| TIPO_DATO '*' IDENTIFICADOR';'          {agregarId($<s.cadena>3,$<s.cadena>1);}
+						| parametro '(' listaTipoDeDato')' ';'    { agregarFuncion( $<s.cadena>1, $<s.cadena>2, $<s.cadena>4);}
 						
 ;
 
 sentenciaAsignacion: parametro '=' exp ';' 
-					|parametro MAS_IGUAL exp ';' {printf("Se ha declarado una sentencia de asignacion \n")}
-					|parametro MENOS_IGUAL exp ';' {printf("Se ha declarado una sentencia de asignacion \n")}
-					|parametro POR_IGUAL exp ';' {printf("Se ha declarado una sentencia de asignacion \n")}
-					|parametro DIVIDIDO_IGUAL exp ';' {printf("Se ha declarado una sentencia de asignacion \n")}
+					|parametro MAS_IGUAL exp ';' 
+					|parametro MENOS_IGUAL exp ';' 
+					|parametro POR_IGUAL exp ';' 
+					|parametro DIVIDIDO_IGUAL exp ';' 
 					
 
 ;
 
 
 parametro:
-			| TIPO_DATO IDENTIFICADOR 
+			| TIPO_DATO IDENTIFICADOR
 			| IDENTIFICADOR 
 
 ;
 
 listaIdentificadores: 	  identificadorA
-						| listaIdentificadores ',' identificadorA   
+						| listaIdentificadores ',' identificadorA 
+						
 
 ;
 
-identificadorA:		  IDENTIFICADOR {}
-					| IDENTIFICADOR '=' exp {printf("Se asigna al identificador %s el valor %f \n",$<s.cadena>1,$<s.valor>3);}
+identificadorA:		  IDENTIFICADOR 
+					| IDENTIFICADOR '=' exp 
+					               
 
 ;
 
@@ -161,19 +165,19 @@ exp:
 			| IDENTIFICADOR
 			| CHAR
 			
-			| exp '-' exp                   {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 - $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la resta\n"); agregarControlTipos($<s.cadena>1, $<s.cadena>3, "resta"); recorrerListaControlTipos();}}
-			| exp '>' exp                   {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 > $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion mayor\n"); agregarControlTipos($<s.cadena>1, $<s.cadena>3, "mayor"); recorrerListaControlTipos();}}
-			| exp '<' exp                   {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 < $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion menor\n"); agregarControlTipos($<s.cadena>1, $<s.cadena>3,"menor"); recorrerListaControlTipos();}}
-			| exp IGUALDAD exp		        {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 == $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion igualdad\n"); agregarControlTipos($<s.cadena>1, $<s.cadena>3, "igualdad"); recorrerListaControlTipos();}}
-			| exp MAYOR_IGUAL exp           {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 >= $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion mayor/igual\n"); agregarControlTipos($<s.cadena>1, $<s.cadena>3, "mayor igual"); recorrerListaControlTipos();}}
-			| exp MENOR_IGUAL exp           {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 <= $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion menor/igual\n"); agregarControlTipos($<s.cadena>1, $<s.cadena>3, "menor igual"); recorrerListaControlTipos();}}
-			| exp DESIGUALDAD exp           {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 != $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion desigualdad\n"); agregarControlTipos($<s.cadena>1, $<s.cadena>3,"desigualdad"); recorrerListaControlTipos();}}
-			| exp AND exp                   {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 && $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion and\n"); agregarControlTipos($<s.cadena>1, $<s.cadena>3, "and"); recorrerListaControlTipos();}}
-			| exp OR exp                    {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 || $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la operacion or\n"); agregarControlTipos($<s.cadena>1, $<s.cadena>3, "or"); recorrerListaControlTipos();}}
+			| exp '-' exp                   {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 - $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{agregarControlTipos($<s.cadena>1, $<s.cadena>3, "resta");  }}
+			| exp '>' exp                   {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 > $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{ agregarControlTipos($<s.cadena>1, $<s.cadena>3, "mayor");  }}
+			| exp '<' exp                   {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 < $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{ agregarControlTipos($<s.cadena>1, $<s.cadena>3,"menor");  }}
+			| exp IGUALDAD exp		        {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 == $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{ agregarControlTipos($<s.cadena>1, $<s.cadena>3, "igualdad");  }}
+			| exp MAYOR_IGUAL exp           {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 >= $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{ agregarControlTipos($<s.cadena>1, $<s.cadena>3, "mayor igual");  }}
+			| exp MENOR_IGUAL exp           {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 <= $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{ agregarControlTipos($<s.cadena>1, $<s.cadena>3, "menor igual");  }}
+			| exp DESIGUALDAD exp           {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 != $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{ agregarControlTipos($<s.cadena>1, $<s.cadena>3,"desigualdad");  }}
+			| exp AND exp                   {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 && $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{ agregarControlTipos($<s.cadena>1, $<s.cadena>3, "and");  }}
+			| exp OR exp                    {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 || $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{agregarControlTipos($<s.cadena>1, $<s.cadena>3, "or");  }}
 			| NUM 
-			| exp '*' exp                   {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 * $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la multipliacion\n"); agregarControlTipos($<s.cadena>1, $<s.cadena>3, "multiplicacion"); recorrerListaControlTipos();}}
-			| exp '/' exp                   {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 / $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la division\n"); agregarControlTipos($<s.cadena>1, $<s.cadena>3, "division"); recorrerListaControlTipos();}}
-			| exp '+' exp                   {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 + $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{printf("No se corresponden los tipos de datos en la suma\n"); agregarControlTipos( $<s.cadena>1, $<s.cadena>3, "suma"); recorrerListaControlTipos();}}
+			| exp '*' exp                   {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 * $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{ agregarControlTipos($<s.cadena>1, $<s.cadena>3, "multiplicacion");  }}
+			| exp '/' exp                   {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 / $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{ agregarControlTipos($<s.cadena>1, $<s.cadena>3, "division");  }}
+			| exp '+' exp                   {$<s.tipo>1 = calcularTipo($<s.cadena>1,$<s.tipo>1);$<s.tipo>3 = calcularTipo($<s.cadena>3,$<s.tipo>3);if ($<s.tipo>1==$<s.tipo>3){$<s.valor>$ = $<s.valor>1 + $<s.valor>3; $<s.tipo>$ = $<s.tipo>1;}else{ agregarControlTipos( $<s.cadena>1, $<s.cadena>3, "suma");}}
 			
 ;
 
@@ -186,7 +190,13 @@ main ()
 yyin = fopen("entrada.txt","r+");
 yyout = fopen("salida.txt","wt+");
 
+
+
 yyparse ();
+
+
+
+reporte();
 
 
 
