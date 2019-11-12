@@ -26,15 +26,11 @@ typedef struct node3{
 struct node3* next;
 }nodoFuncion;
 
-typedef struct node4{
-  char nombreError[200];
-struct node4* next;
-}nodoError;
 
 nodoIdentificador *primeroId=NULL;
 nodoControlTipos *primeroTipos = NULL;
 nodoFuncion *primeroFuncion = NULL;
-nodoError *primeroError = NULL;
+
 
 int idEncontrado(nodoIdentificador* lista,char* iden){
 	nodoIdentificador* aux = primeroId;
@@ -85,6 +81,10 @@ void agregarId(char *iden, char *tipoDato){
 
 }
 
+void funcion (){
+
+
+}
 
 void recorrerListaId(){
 
@@ -174,12 +174,13 @@ int chequearTipo(char* unString,char* otroString){
 
 int calcularTipo(char* potencialIdentificador, int tipoOriginal){
     if (idEncontrado(primeroId,potencialIdentificador)){
-        printf(" Si ves esto significa que encontro el id, no que es doble declaracion \n");
+
         return buscarTipo(potencialIdentificador);
 
     }
     return tipoOriginal;
 }
+
 
 
 void recorrerListaDobleDeclaracion (){
@@ -194,7 +195,7 @@ void recorrerListaDobleDeclaracion (){
 }
 
 void reporte(){
-    printf("____________________________________Aca empieza el REPORTE \n");
+    printf("\n");
     recorrerListaId();
     recorrerListaFuncion();
     recorrerListaControlTipos();
@@ -206,7 +207,7 @@ void reporte(){
 
 yyerror(char *s){
     extern int yylineno;
-    printf("\n Error sintactico %s. En la linea %i \n",s,yylineno);
+    printf("\n Error sintactico %s. En la linea %i \n\n",s,yylineno);
 }
 
 

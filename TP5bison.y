@@ -86,7 +86,7 @@ listadoDeSentencias:
 sentenciaDo: DO '{' listadoDeSentencias '}' {printf( "Se ha declarado una sentencia do \n");}
 
 
-sentenciaFor :	 PALABRA_RESERVADA '(' sentenciaDeclaracion ';' exp ';' identificadorA '+''+' ')' '{' listadoDeSentencias '}' '\n' {printf("Se ha declarado una sentencia for\n"); fputs("Se ha declarado una sentencia for \n", yyout);}
+sentenciaFor :	 PALABRA_RESERVADA '(' sentenciaDeclaracion exp ';' identificadorA '+''+' ')' '{' listadoDeSentencias '}'  {printf("Se ha declarado una sentencia for\n"); fputs("Se ha declarado una sentencia for \n", yyout);}
 				| PALABRA_RESERVADA '(' sentenciaDeclaracion ';' exp ';' identificadorA '-''-' ')' '{' listadoDeSentencias '}' {printf("Se ha declarado una sentencia for\n")}
 
 ;
@@ -150,7 +150,7 @@ listaIdentificadores: 	  identificadorA
 ;
 
 identificadorA:		  IDENTIFICADOR 
-					| IDENTIFICADOR '=' exp 
+					| IDENTIFICADOR '=' exp {printf("Se le asigna al identificador %s el valor %f \n", $<s.cadena>1 ,$<s.valor>3)}
 					               
 
 ;
